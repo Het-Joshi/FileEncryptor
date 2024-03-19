@@ -14,7 +14,7 @@ public class UserInterface {
         fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         JFrame frame = new JFrame("File Encryptor");
-        frame.setSize(400, 250);
+        frame.setSize(400, 290);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // Center the frame on the screen
 
@@ -70,9 +70,33 @@ public class UserInterface {
         });
         panel.add(browseOutputButton);
 
+        JLabel keyLabel = new JLabel("Key:");
+        keyLabel.setBounds(20, 160, 80, 25);
+        panel.add(keyLabel);
+
+        JTextField keyInputText = new JTextField();
+        keyInputText.setBounds(100, 160, 200, 25);
+        keyInputText.setText("yourEncryptionKey");
+        FileEncryptor.generateKey("yourEncryptionKey");
+        panel.add(keyInputText);
+
+        JButton setKeyButton = new JButton("Set Key");
+        setKeyButton.setBounds(310, 160, 70, 25);
+        setKeyButton.addActionListener(e -> {
+            if (keyInputText.getText().isEmpty())
+                return;
+
+            FileEncryptor.generateKey(keyInputText.getText());
+        });
+        panel.add(setKeyButton);
+
         JButton encryptButton = new JButton("Encrypt");
-        encryptButton.setBounds(150, 160, 100, 30);
+        encryptButton.setBounds(150, 200, 100, 30);
         encryptButton.addActionListener(e -> {
+            if (inputFileText.getText().isEmpty() || outputFileText.getText().isEmpty() ||
+                    keyInputText.getText().isEmpty())
+                return;
+
             try {
                 String inputFilePath = inputFileText.getText();
                 String outputFilePath = outputFileText.getText();
