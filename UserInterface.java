@@ -7,6 +7,9 @@ import java.awt.event.ActionListener;
 
 public class UserInterface {
     public void displayMenu() {
+
+        setupLookAndFeel();
+
         JFrame frame = new JFrame("File Encryptor");
         frame.setSize(400, 250);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -60,4 +63,13 @@ public class UserInterface {
 
         frame.setVisible(true);
     }
+
+    private void setupLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
