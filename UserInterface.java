@@ -2,13 +2,16 @@ package Main;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.io.File;
 
 public class UserInterface {
     public void displayMenu() {
 
         setupLookAndFeel();
+
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 
         JFrame frame = new JFrame("File Encryptor");
         frame.setSize(400, 250);
@@ -37,6 +40,17 @@ public class UserInterface {
         inputFileText.setBounds(100, 80, 200, 25);
         panel.add(inputFileText);
 
+        JButton browseInputButton = new JButton("Browse");
+        browseInputButton.setBounds(310, 80, 70, 25);
+        browseInputButton.addActionListener(e -> {
+            int result = fileChooser.showOpenDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                inputFileText.setText(selectedFile.getAbsolutePath());
+            }
+        });
+        panel.add(browseInputButton);
+
         JLabel outputFileLabel = new JLabel("Output File:");
         outputFileLabel.setBounds(20, 120, 80, 25);
         panel.add(outputFileLabel);
@@ -45,18 +59,27 @@ public class UserInterface {
         outputFileText.setBounds(100, 120, 200, 25);
         panel.add(outputFileText);
 
+        JButton browseOutputButton = new JButton("Browse");
+        browseOutputButton.setBounds(310, 120, 70, 25);
+        browseOutputButton.addActionListener(e -> {
+            int result = fileChooser.showOpenDialog(frame);
+            if (result == JFileChooser.APPROVE_OPTION) {
+                File selectedFile = fileChooser.getSelectedFile();
+                outputFileText.setText(selectedFile.getAbsolutePath());
+            }
+        });
+        panel.add(browseOutputButton);
+
         JButton encryptButton = new JButton("Encrypt");
         encryptButton.setBounds(150, 160, 100, 30);
-        encryptButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String inputFilePath = inputFileText.getText();
-                    String outputFilePath = outputFileText.getText();
-                    FileEncryptor.EncryptFile(inputFilePath, outputFilePath);
-                    JOptionPane.showMessageDialog(null, "File encrypted successfully!");
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
-                }
+        encryptButton.addActionListener(e -> {
+            try {
+                String inputFilePath = inputFileText.getText();
+                String outputFilePath = outputFileText.getText();
+                FileEncryptor.EncryptFile(inputFilePath, outputFilePath);
+                JOptionPane.showMessageDialog(null, "File encrypted successfully!");
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
             }
         });
         panel.add(encryptButton);

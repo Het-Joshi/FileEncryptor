@@ -1,5 +1,6 @@
 package Main;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
@@ -27,7 +28,7 @@ public class FileEncryptor {
 	}
 
 	private static Key generateKey() throws Exception {
-		byte[] key = ENCRYPTION_KEY.getBytes("UTF-8");
+		byte[] key = ENCRYPTION_KEY.getBytes(StandardCharsets.UTF_8);
 		MessageDigest sha = MessageDigest.getInstance("SHA-1");
 		key = sha.digest(key);
 		key = Arrays.copyOf(key, 16);
