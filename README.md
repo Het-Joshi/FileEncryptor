@@ -1,10 +1,11 @@
 # File Encryptor
 
-The File Encryptor is a simple Java application that allows users to encrypt files using the AES encryption algorithm.
+The File Encryptor is a simple Java application that allows users to encrypt files using the AES 256 encryption algorithm.
 
 ## Features
 
-- Encrypts files using AES encryption algorithm
+- Encrypts files using AES 256 encryption algorithm
+- Specify your own encryption key
 - Simple user interface for selecting input and output files
 
 ## Getting Started
